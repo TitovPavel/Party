@@ -13,7 +13,8 @@ namespace Party.Controllers
         IParticipantsService repo;
         public PartyController(IParticipantsService r)
         {
-            repo = r;
+            //repo = r;
+            repo = MvcApplication.locator.Resolve(typeof(IParticipantsService)) as IParticipantsService;
         }
 
         // GET: Party

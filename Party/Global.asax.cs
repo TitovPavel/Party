@@ -1,3 +1,4 @@
+using Party.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,12 @@ namespace Party
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static Locator locator;      
+
         protected void Application_Start()
         {
+            locator = new Locator();
+            locator.Register();
             AutofacConfig.ConfigureContainer();
 
             AreaRegistration.RegisterAllAreas();

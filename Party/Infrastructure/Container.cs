@@ -8,13 +8,14 @@ using System.Reflection;
 
 namespace Party.Models
 {
-    class Locator
+    public class Locator
     {
-        public List<Pair> pairs = new List<Pair>();
+        List<Pair> pairs;
 
 
         public void Register()
         {
+            pairs = new List<Pair>();
             pairs.Add(new Pair(typeof(ILogger), typeof(Logger)));
             pairs.Add(new Pair(typeof(IParticipantsRepository), typeof(ParticipantsRepository)));
             pairs.Add(new Pair(typeof(IParticipantsService), typeof(ParticipantsService)));
