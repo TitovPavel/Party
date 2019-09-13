@@ -1,10 +1,12 @@
 ﻿using Party.BL;
+using Party.Controllers;
 using Party.DAL;
 using Party.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace Party.Models
 {
@@ -19,6 +21,8 @@ namespace Party.Models
             pairs.Add(new Pair(typeof(ILogger), typeof(Logger)));
             pairs.Add(new Pair(typeof(IParticipantsRepository), typeof(ParticipantsRepository)));
             pairs.Add(new Pair(typeof(IParticipantsService), typeof(ParticipantsService)));
+            pairs.Add(new Pair(typeof(HomeController), typeof(HomeController)));
+            pairs.Add(new Pair(typeof(PartyController), typeof(PartyController)));
 
         }
 
@@ -27,9 +31,9 @@ namespace Party.Models
 
             Pair pair = pairs.FirstOrDefault<Pair>(x => x.TypeInterface == type);
 
-            if (pair!=null)
+            if (pair!=null )
             {
-                if (pair.Obj == null)
+                if (pair.Obj == null || type.ToString().Contains("Controller"))
                 {
                     CreateObject(pair);
                 }

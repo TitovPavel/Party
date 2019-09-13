@@ -115,6 +115,7 @@
     <Compile Include="Infrastructure\Container.cs" />
     <Compile Include="Infrastructure\ILogger.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
+    <Compile Include="Infrastructure\Resolver.cs" />
     <Compile Include="Models\Participants.cs" />
     <Compile Include="Models\Party.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

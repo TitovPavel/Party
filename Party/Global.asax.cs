@@ -1,3 +1,4 @@
+using Party.Infrastructure;
 using Party.Models;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,10 @@ namespace Party
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static Locator locator;      
-
         protected void Application_Start()
         {
-            locator = new Locator();
-            locator.Register();
-            AutofacConfig.ConfigureContainer();
+            DependencyResolver.SetResolver(new Resolver(DependencyResolver.Current));
+            //AutofacConfig.ConfigureContainer();
 
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
