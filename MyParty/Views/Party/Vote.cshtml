@@ -1,0 +1,43 @@
+﻿@model MyParty.ViewModels.ParticipantViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Vote</title>
+</head>
+<body>
+    @using (Html.BeginForm("Save", "Party", FormMethod.Post))
+    {
+        <p>
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <br />
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Attend, htmlAttributes: new { @class = "control-label col-md-2" })
+            <br />
+            @Html.EditorFor(model => model.Attend)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.ArrivalDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <br />
+            @Html.EditorFor(model => model.ArrivalDate)
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+            <br />
+            @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+        </p>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <input type="submit" value="Save" class="Save" />
+    }
+</body>
+</html>
