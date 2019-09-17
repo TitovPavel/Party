@@ -1,17 +1,6 @@
 ﻿@model List<MyParty.ViewModels.PartyViewModel>
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <div>
+<div>
         <p>Всем привет. Приходите на наши вечеринки</p>
         @foreach (var item in Model)
         {
@@ -20,6 +9,5 @@
             </p>
         }
 
-    </div>
-</body>
-</html>
+</div>
+
