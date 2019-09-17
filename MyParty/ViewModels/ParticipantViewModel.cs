@@ -8,8 +8,11 @@ namespace MyParty.ViewModels
 {
     public class ParticipantViewModel
     {
+        [Display(Name = "Имя")]
         public string Name { get; set; }
+        [Display(Name = "Приду")]
         public bool Attend { get; set; }
+        [Display(Name = "Причина отсутствия")]
         public string Reason { get; set; }
         [Display(Name = "Время прибытия")]
         [DataType(DataType.Time)]

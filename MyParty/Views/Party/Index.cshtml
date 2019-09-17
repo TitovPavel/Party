@@ -1,19 +1,6 @@
 ﻿@using MyParty.ViewModels
 @model PartyParticipantsViewModel
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-
     <h1>@Model.PartyTitle</h1>
     <h3>Список участников:</h3>
 
@@ -45,5 +32,3 @@
         @Html.ActionLink("Проголосовать", "vote", new { id = @Model.PartyID})
     </p>
 
-</body>
-</html>
