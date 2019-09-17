@@ -1,0 +1,13 @@
+﻿@model List<MyParty.ViewModels.PartyViewModel>
+
+<div>
+        <p>Всем привет. Приходите на наши вечеринки</p>
+        @foreach (var item in Model)
+        {
+            <p>
+                @Html.ActionLink(item.Title, "index", "Party", new { id = item.Id}, null)
+            </p>
+        }
+
+</div>
+

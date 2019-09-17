@@ -1,0 +1,34 @@
+﻿@using MyParty.ViewModels
+@model PartyParticipantsViewModel
+
+    <h1>@Model.PartyTitle</h1>
+    <h3>Список участников:</h3>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyParticipants[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyParticipants[0].ArrivalDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.PartyParticipants)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.ArrivalDate)
+                </td>
+            </tr>
+        }
+    </table>
+
+    <p>
+        @Html.ActionLink("Проголосовать", "vote", new { id = @Model.PartyID})
+    </p>
+
