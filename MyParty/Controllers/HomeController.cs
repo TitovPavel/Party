@@ -20,7 +20,7 @@ namespace MyParty.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().Select(_ => new PartyViewModel { Id = _.Id, Title = _.Title }).ToList();
+            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().Select(_ => new PartyViewModel { Id = _.Id, Title = _.Title, Location = _.Location, Date = _.Date }).ToList();
             return View(partyViews);
         }
     }
