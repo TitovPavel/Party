@@ -22,6 +22,7 @@ namespace MyParty.Infrastructure
             builder.RegisterType<ParticipantsRepository>().As<IParticipantsRepository>();
             builder.RegisterType<PartyRepository>().As<IPartyRepository>();
             builder.RegisterType<PartyService>().As<IPartyService>();
+            builder.RegisterType<LastViewedParties>().As<ILastViewedParties>();
 
             // создаем новый контейнер с теми зависимостями, которые определены выше
             var container = builder.Build();

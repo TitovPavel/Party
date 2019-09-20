@@ -1,6 +1,9 @@
 ﻿@using MyParty.ViewModels
 @using MyParty.Helpers
 
+@{
+    Layout = "";
+}
 <p>10 ближайших вечеринок:</p>
 <ul>
     @foreach (PartyViewModel item in ViewBag.ListParties)

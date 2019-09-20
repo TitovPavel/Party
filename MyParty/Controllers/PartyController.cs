@@ -1,4 +1,5 @@
 ﻿using MyParty.BL;
+using MyParty.Infrastructure;
 using MyParty.Models;
 using MyParty.ViewModels;
 using System;
@@ -13,9 +14,11 @@ namespace MyParty.Controllers
     public class PartyController : Controller
     {
         IPartyService partyService;
+        ILastViewedParties lastViewedParties;
 
-        public PartyController(IPartyService r)
+        public PartyController(IPartyService r, ILastViewedParties lastViewedParties)
         {
+            this.lastViewedParties = lastViewedParties;
             partyService = r;
             List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().OrderBy(_ => _.Date).Take(10).Select(_ => new PartyViewModel { Id = _.Id, Title = _.Title, Location = _.Location, Date = _.Date }).ToList();
             ViewBag.ListParties = partyViews;
@@ -24,7 +27,9 @@ namespace MyParty.Controllers
         // GET: Party
         public ActionResult Index(int id)
         {
-           
+            
+            lastViewedParties.AddParty(HttpContext.Session, id);
+            
             Party party = partyService.GetPartyByID(id);
 
             PartyParticipantsViewModel partyParticipantsViewModel = new PartyParticipantsViewModel();
@@ -69,6 +74,14 @@ namespace MyParty.Controllers
         {
             string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ParticipansPhoto", String.Concat(userName, ".jpg"));
             return File(_path, "image/jpg");
+        }
+
+        public ActionResult ListLastViewedParties()
+        {
+            List<int> listId = lastViewedParties.GetParties(HttpContext.Session);
+            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().Where(x=> listId.Contains(x.Id)).Select(_ => new PartyViewModel { Id = _.Id, Title = _.Title, Location = _.Location, Date = _.Date }).ToList();
+            ViewBag.ListParties = partyViews;
+            return View("ListParties");
         }
     }
 }
