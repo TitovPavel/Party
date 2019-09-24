@@ -9,17 +9,29 @@ namespace MyParty.Infrastructure
 {
     public class LastViewedParties : ILastViewedParties
     {
-        public void AddParty(HttpSessionStateBase httpSessionStateWrapper, int partyId)
+        public HttpSessionStateBase Session { get; private set; }
+
+        public LastViewedParties() : this(new HttpSessionStateWrapper(HttpContext.Current.Session))
+        { }
+
+
+        public LastViewedParties(HttpSessionStateBase sessionWrapper)
+        {
+            Session = sessionWrapper;
+        }
+
+        
+        public void AddParty(int partyId)
         {
             List<int> lastViewedParties;
-            if (httpSessionStateWrapper["LastViewedParties"] == null)
+            if (Session["LastViewedParties"] == null)
             {
                 lastViewedParties = new List<int>();
-                httpSessionStateWrapper["LastViewedParties"] = lastViewedParties;
+                Session["LastViewedParties"] = lastViewedParties;
             }
             else
             {
-                lastViewedParties = httpSessionStateWrapper["LastViewedParties"] as List<int>;
+                lastViewedParties = Session["LastViewedParties"] as List<int>;
             }
 
             lastViewedParties.Remove(partyId);
@@ -27,15 +39,15 @@ namespace MyParty.Infrastructure
 
         }
 
-        public List<int> GetParties(HttpSessionStateBase httpSessionStateWrapper)
+        public List<int> GetParties()
         {
-            if (httpSessionStateWrapper["LastViewedParties"] == null)
+            if (Session["LastViewedParties"] == null)
             {
                 return new List<int>();
             }
             else
             {
-                return httpSessionStateWrapper["LastViewedParties"] as List<int>;
+                return Session["LastViewedParties"] as List<int>;
             }
         }
     }

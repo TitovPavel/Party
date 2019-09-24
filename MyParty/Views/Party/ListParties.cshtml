@@ -4,12 +4,12 @@
 @{
     Layout = "";
 }
-<p>10 ближайших вечеринок:</p>
-<ul>
+    <p>@ViewBag.NameListParties</p>
+<ol>
     @foreach (PartyViewModel item in ViewBag.ListParties)
     {
-        <li>
-            @Html.CreateParty(item, "index", "Party")
-        </li>
+    <li>
+        @Html.CreateParty(item, "index", "Party")
+    </li>
     }
-</ul>
+</ol>

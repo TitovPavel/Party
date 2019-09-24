@@ -6,7 +6,7 @@ namespace MyParty.Infrastructure
 {
     public interface ILastViewedParties
     {
-        List<int> GetParties(HttpSessionStateBase httpSessionStateWrapper);
-        void AddParty(HttpSessionStateBase httpSessionStateWrapper, int partyId);
+        List<int> GetParties();
+        void AddParty(int partyId);
     }
 }
