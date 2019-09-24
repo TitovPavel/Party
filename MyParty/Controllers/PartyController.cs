@@ -1,4 +1,5 @@
 ﻿using MyParty.BL;
+using MyParty.Infrastructure;
 using MyParty.Models;
 using MyParty.ViewModels;
 using System;
@@ -13,24 +14,29 @@ namespace MyParty.Controllers
     public class PartyController : Controller
     {
         IPartyService partyService;
+        ILastViewedParties lastViewedParties;
 
-        public PartyController(IPartyService r)
+        public PartyController(IPartyService r, ILastViewedParties lastViewedParties)
         {
+            this.lastViewedParties = lastViewedParties;
             partyService = r;
-            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().OrderBy(_ => _.Date).Take(10).Select(_ => new PartyViewModel { Id = _.Id, Title = _.Title, Location = _.Location, Date = _.Date }).ToList();
+            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties().OrderBy(x => x.Date).Take(10).Select(x => new PartyViewModel { Id = x.Id, Title = x.Title, Location = x.Location, Date = x.Date }).ToList();
             ViewBag.ListParties = partyViews;
+            ViewBag.NameListParties = "10 ближайших вечеринок:";
         }
 
         // GET: Party
         public ActionResult Index(int id)
         {
-           
+            
+            lastViewedParties.AddParty(id);
+            
             Party party = partyService.GetPartyByID(id);
 
             PartyParticipantsViewModel partyParticipantsViewModel = new PartyParticipantsViewModel();
             partyParticipantsViewModel.PartyID = id;
             partyParticipantsViewModel.PartyTitle = party.Title;
-            partyParticipantsViewModel.PartyParticipants = partyService.ListAttendent().Where(_ => _.PartyId == id).Select(_ => new PartyParticipants { Id = _.Id, Name = _.Name, ArrivalDate = _.ArrivalDate }).ToList();
+            partyParticipantsViewModel.PartyParticipants = partyService.ListAttendent().Where(x => x.PartyId == id).Select(x => new PartyParticipants { Id = x.Id, Name = x.Name, ArrivalDate = x.ArrivalDate }).ToList();
 
             return View(partyParticipantsViewModel);
         }
@@ -69,6 +75,26 @@ namespace MyParty.Controllers
         {
             string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ParticipansPhoto", String.Concat(userName, ".jpg"));
             return File(_path, "image/jpg");
+        }
+
+        public ActionResult ListLastViewedParties()
+        {
+            List<int> listId = lastViewedParties.GetParties();
+
+            List<PartyViewModel> partyViews = partyService.ListOfCurrentParties()
+                .Where(x=> listId.Contains(x.Id))
+                .Select(x => new PartyViewModel {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Location = x.Location,
+                    Date = x.Date })
+                .OrderByDescending(x => listId.FindIndex(y => x.Id == y))
+                .ToList();
+
+            ViewBag.ListParties = partyViews;
+            ViewBag.NameListParties = "5 последних просмотренных вечеринок вечеринок:";
+
+            return View("ListParties");
         }
     }
 }

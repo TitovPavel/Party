@@ -178,7 +178,9 @@
     <Compile Include="Infrastructure\AutofacConfig.cs" />
     <Compile Include="Infrastructure\Container.cs" />
     <Compile Include="Infrastructure\DateTimeModelBinder.cs" />
+    <Compile Include="Infrastructure\ILastViewedParties.cs" />
     <Compile Include="Infrastructure\ILogger.cs" />
+    <Compile Include="Infrastructure\LastViewedParties.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\Resolver.cs" />
     <Compile Include="Models\Participants.cs" />
